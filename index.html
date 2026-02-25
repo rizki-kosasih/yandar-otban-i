@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistem Manajemen Keselamatan Bandar Udara</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  overflow-x:hidden;
+}
+
+/* ===== BACKGROUND ===== */
+.background{
+  position:fixed;
+  inset:0;
+  background:url('kosasih.png') center/cover no-repeat;
+  filter:blur(1px);
+  z-index:-2;
+}
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,40,85,.7);
+  z-index:-1;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  position:fixed;
+  width:260px;
+  height:100vh;
+  background:linear-gradient(#003366,#001a33);
+  color:#fff;
+  padding:20px;
+}
+
+.sidebar img{
+  width:80px;
+  display:block;
+  margin:0 auto 12px;
+}
+
+.sidebar h2{
+  font-size:13px;
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.menu{
+  padding:10px;
+  border-radius:6px;
+  cursor:pointer;
+  margin-bottom:6px;
+}
+
+.menu:hover{
+  background:#ffcc00;
+  color:#003366;
+}
+
+/* ===== MAIN ===== */
+.main{
+  margin-left:260px;
+}
+
+.topbar{
+  background:#fff;
+  padding:15px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.search input{
+  padding:8px 15px;
+  border-radius:20px;
+  border:1px solid #ccc;
+  width:220px;
+}
+
+.content{
+  padding:25px;
+}
+
+.card{
+  background:#fff;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,.1);
+  display:none;
+}
+
+.card h3{
+  color:#003366;
+  margin-bottom:15px;
+}
+
+/* ===== PDF LIST ===== */
+.pdf-list a{
+  display:block;
+  padding:10px;
+  background:#f1f3f6;
+  margin-bottom:8px;
+  border-radius:6px;
+  text-decoration:none;
+  color:#003366;
+}
+
+.pdf-list a:hover{
+  background:#003366;
+  color:#fff;
+}
+
+/* ===== DASHBOARD ===== */
+.dashboard{
+  display:block;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:15px;
+}
+
+.stat{
+  background:#003366;
+  color:#fff;
+  padding:20px;
+  border-radius:12px;
+  text-align:center;
+}
+
+footer{
+  margin-top:30px;
+  text-align:center;
+  font-size:13px;
+  color:#666;
+}
+</style>
+
+<script>
+function showSection(id){
+  document.querySelectorAll('.card').forEach(c=>c.style.display='none');
+  document.getElementById(id).style.display='block';
+
+  // reset search
+  document.getElementById("searchInput").value="";
+  document.querySelectorAll(".pdf-list a").forEach(a=>a.style.display="block");
+}
+
+function toggleSub(){
+  const m=document.getElementById("regulasiMenu");
+  m.style.display = m.style.display==="block" ? "none" : "block";
+}
+
+function searchPDF(){
+  const q=document.getElementById("searchInput").value.toLowerCase();
+  const active=document.querySelector(".card:not([style*='display: none'])");
+  if(!active || !active.querySelector(".pdf-list")) return;
+
+  active.querySelectorAll(".pdf-list a").forEach(a=>{
+    a.style.display = a.textContent.toLowerCase().includes(q) ? "block" : "none";
+  });
+}
+</script>
+</head>
+
+<body>
+
+<div class="background"></div>
+<div class="overlay"></div>
+
+<div class="sidebar">
+  <img src="logo.png">
+  <h2>Seksi Pelayanan Darurat<br>OBU Wilayah I</h2>
+
+  <div class="menu" onclick="showSection('dashboard')">Dashboard</div>
+
+  <div class="menu" onclick="toggleSub()">Regulasi ▾</div>
+  <div id="regulasiMenu" style="display:none;margin-left:10px;">
+    <div class="menu" onclick="showSection('pm')">PM</div>
+    <div class="menu" onclick="showSection('kp')">KP</div>
+    <div class="menu" onclick="showSection('pr')">PR</div>
+    <div class="menu" onclick="showSection('se')">SE</div>
+  </div>
+
+  <div class="menu" onclick="showSection('monitoring')">Monitoring</div>
+  <div class="menu" onclick="showSection('pkppk')">PKP-PK</div>
+</div>
+
+<div class="main">
+
+  <div class="topbar">
+    <h3>Sistem Manajemen Keselamatan Bandar Udara</h3>
+    <div class="search">
+      <input id="searchInput" onkeyup="searchPDF()" placeholder="Cari regulasi...">
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="card dashboard" id="dashboard">
+      <h3>Dashboard Keselamatan</h3>
+      <div class="stats">
+        <div class="stat"><h2>2</h2><p>PM</p></div>
+        <div class="stat"><h2>2</h2><p>KP</p></div>
+        <div class="stat"><h2>2</h2><p>PR</p></div>
+        <div class="stat"><h2>2</h2><p>SE</p></div>
+      </div>
+      <footer>© 2026 Seksi Pelayanan Darurat – Otoritas Bandar Udara</footer>
+    </div>
+
+    <div class="card" id="pm">
+      <h3>Peraturan Menteri (PM)</h3>
+      <div class="pdf-list">
+        <a href="pdf/pm27.pdf" target="_blank">PM 27</a>
+        <a href="pdf/pm31.pdf" target="_blank">PM 31</a>
+      </div>
+    </div>
+
+    <div class="card" id="kp">
+      <h3>Keputusan (KP)</h3>
+      <div class="pdf-list">
+        <a href="pdf/kp31.pdf" target="_blank">KP 31</a>
+        <a href="pdf/kp458.pdf" target="_blank">KP 458</a>
+      </div>
+    </div>
+
+    <div class="card" id="pr">
+      <h3>Peraturan (PR)</h3>
+      <div class="pdf-list">
+        <a href="pdf/pr5.pdf" target="_blank">PR 5</a>
+        <a href="pdf/pr25.pdf" target="_blank">PR 25</a>
+      </div>
+    </div>
+
+    <div class="card" id="se">
+      <h3>Surat Edaran (SE)</h3>
+      <div class="pdf-list">
+        <a href="pdf/se8.pdf" target="_blank">SE 8</a>
+        <a href="pdf/se10.pdf" target="_blank">SE 10</a>
+      </div>
+    </div>
+
+    <div class="card" id="monitoring">
+      <h3>Monitoring</h3>
+      <p>Monitoring kesiapan operasional dan keselamatan pelayanan bandar udara.</p>
+    </div>
+
+    <div class="card" id="pkppk">
+      <h3>PKP-PK</h3>
+      <p>Data personel, peralatan, dan kesiapan unit PKP-PK.</p>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
