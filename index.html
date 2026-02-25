@@ -37,11 +37,14 @@ body{
 /* ===== SIDEBAR ===== */
 .sidebar{
   position:fixed;
+  top:0;
+  left:0;
   width:260px;
   height:100vh;
   background:linear-gradient(#003366,#001a33);
   color:#fff;
   padding:20px;
+  transition:.3s;
 }
 
 .sidebar img{
@@ -77,8 +80,14 @@ body{
   background:#fff;
   padding:15px 20px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  gap:15px;
+}
+
+.menu-toggle{
+  display:none;
+  font-size:22px;
+  cursor:pointer;
 }
 
 .search input{
@@ -86,6 +95,7 @@ body{
   border-radius:20px;
   border:1px solid #ccc;
   width:220px;
+  margin-left:auto;
 }
 
 .content{
@@ -146,6 +156,30 @@ footer{
   font-size:13px;
   color:#666;
 }
+
+/* ===== RESPONSIVE (HP) ===== */
+@media(max-width:768px){
+  .sidebar{
+    left:-260px;
+    z-index:1000;
+  }
+
+  .sidebar.active{
+    left:0;
+  }
+
+  .main{
+    margin-left:0;
+  }
+
+  .menu-toggle{
+    display:block;
+  }
+
+  .search input{
+    width:150px;
+  }
+}
 </style>
 
 <script>
@@ -153,14 +187,19 @@ function showSection(id){
   document.querySelectorAll('.card').forEach(c=>c.style.display='none');
   document.getElementById(id).style.display='block';
 
-  // reset search
   document.getElementById("searchInput").value="";
   document.querySelectorAll(".pdf-list a").forEach(a=>a.style.display="block");
+
+  document.querySelector(".sidebar").classList.remove("active");
 }
 
 function toggleSub(){
   const m=document.getElementById("regulasiMenu");
   m.style.display = m.style.display==="block" ? "none" : "block";
+}
+
+function toggleSidebar(){
+  document.querySelector(".sidebar").classList.toggle("active");
 }
 
 function searchPDF(){
@@ -199,8 +238,8 @@ function searchPDF(){
 </div>
 
 <div class="main">
-
   <div class="topbar">
+    <span class="menu-toggle" onclick="toggleSidebar()">☰</span>
     <h3>Sistem Manajemen Keselamatan Bandar Udara</h3>
     <div class="search">
       <input id="searchInput" onkeyup="searchPDF()" placeholder="Cari regulasi...">
@@ -223,32 +262,32 @@ function searchPDF(){
     <div class="card" id="pm">
       <h3>Peraturan Menteri (PM)</h3>
       <div class="pdf-list">
-        <a href="pdf/pm27.pdf" target="_blank">PM 27</a>
-        <a href="pdf/pm31.pdf" target="_blank">PM 31</a>
+        <a href="PDF/pm27.pdf" target="_blank">PM 27</a>
+        <a href="PDF/pm31.pdf" target="_blank">PM 31</a>
       </div>
     </div>
 
     <div class="card" id="kp">
       <h3>Keputusan (KP)</h3>
       <div class="pdf-list">
-        <a href="pdf/kp31.pdf" target="_blank">KP 31</a>
-        <a href="pdf/kp458.pdf" target="_blank">KP 458</a>
+        <a href="PDF/kp31.pdf" target="_blank">KP 31</a>
+        <a href="PDF/kp458.pdf" target="_blank">KP 458</a>
       </div>
     </div>
 
     <div class="card" id="pr">
       <h3>Peraturan (PR)</h3>
       <div class="pdf-list">
-        <a href="pdf/pr5.pdf" target="_blank">PR 5</a>
-        <a href="pdf/pr25.pdf" target="_blank">PR 25</a>
+        <a href="PDF/pr5.pdf" target="_blank">PR 5</a>
+        <a href="PDF/pr25.pdf" target="_blank">PR 25</a>
       </div>
     </div>
 
     <div class="card" id="se">
       <h3>Surat Edaran (SE)</h3>
       <div class="pdf-list">
-        <a href="pdf/se8.pdf" target="_blank">SE 8</a>
-        <a href="pdf/se10.pdf" target="_blank">SE 10</a>
+        <a href="PDF/se8.pdf" target="_blank">SE 8</a>
+        <a href="PDF/se10.pdf" target="_blank">SE 10</a>
       </div>
     </div>
 
